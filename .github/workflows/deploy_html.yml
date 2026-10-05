@@ -44,10 +44,10 @@ jobs:
       - name: Clone Docs
         run: |
           # GIT_LFS_SKIP_SMUDGE=1 git clone -b dev --depth 1 https://${{ secrets.SMDDOCUMENTATIONTOKEN }}@github.com/Bertz-TII/SMDExplorer-Documentation.git
-          git clone -b dev --depth 1 https://${{ secrets.SMDDOCUMENTATIONTOKEN }}@github.com/Bertz-TII/SMDExplorer-Documentation.git
+          git clone -b main --depth 1 https://${{ secrets.SMDDOCUMENTATIONTOKEN }}@github.com/Tokyo-Instruments/SMDExplorer-Documentation-Sources.git
 
           python -m pip install --upgrade pip
-          cd SMDExplorer-Documentation
+          cd SMDExplorer-Documentation-Sources
           ls
           pip install -r requirements.txt
        
@@ -55,14 +55,14 @@ jobs:
         # Outputs to the './_site' directory by default
         run: |
           ls
-          cd SMDExplorer-Documentation
+          cd SMDExplorer-Documentation-Sources
           python docs/build.py
 
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
         with:
-          path: SMDExplorer-Documentation/docs/build/html
+          path: SMDExplorer-Documentation-Sources/docs/build/html
 
   # Deployment job
   deploy:
