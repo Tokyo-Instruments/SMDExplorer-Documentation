@@ -49,7 +49,7 @@ jobs:
           git clone -b main --depth 1 https://${{ secrets.SMDDOCUMENTATIONTOKEN }}@github.com/Tokyo-Instruments/SMDExplorer-Documentation-Sources.git
 
           python -m pip install --upgrade pip
-          cd SMDExplorer-Documentation
+          cd SMDExplorer-Documentation-Sources
           ls
           pip install -r requirements.txt
 
@@ -62,7 +62,7 @@ jobs:
           sudo apt-get install texlive-extra-utils
           
           npm install -g @mermaid-js/mermaid-cli
-          cd SMDExplorer-Documentation/docs/source
+          cd SMDExplorer-Documentation-Sources/docs/source
           
           sphinx-build -E -b latex -D language=en -D latex_engine=lualatex . ../build/tex_en
           sphinx-build -E -b latex -D language=ja -D latex_engine=uplatex . ../build/tex_ja
@@ -70,7 +70,7 @@ jobs:
       - uses: xu-cheng/texlive-action@v3
         with:
             run: |
-                cd SMDExplorer-Documentation/docs/build/tex_en
+                cd SMDExplorer-Documentation-Sources/docs/build/tex_en
                 export XINDYOPTS="-L english -C utf8  -M sphinx.xdy"
                 latexmk -pdf -dvi- -ps-
                 mv smdexplorer.pdf ../smdexplorer_en.pdf
@@ -83,14 +83,14 @@ jobs:
         # Outputs to the './_site' directory by default
         run: |
           ls
-          cd SMDExplorer-Documentation
+          cd SMDExplorer-Documentation-Sources
           python docs/build_html_pdf.py
 
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v5
         with:
-          path: SMDExplorer-Documentation/docs/build/html
+          path: SMDExplorer-Documentation-Sources/docs/build/html
 
   # Deployment job
   deploy:
